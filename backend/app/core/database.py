@@ -2,19 +2,22 @@ from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sess
 from sqlalchemy.orm import declarative_base
 from app.config import settings
 
-# Fallback in-memory SQLite if PostgreSQL is not active locally during dev/test
 database_url = settings.DATABASE_URL
-if "postgresql" in database_url and not database_url.startswith("sqlite"):
-    # Async SQLAlchemy URL
-    pass
+if database_url.startswith("postgresql://"):
+    database_url = database_url.replace("postgresql://", "postgresql+asyncpg://", 1)
 
 Base = declarative_base()
 
 # Async Engine setup
+connect_args = {}
+if database_url.startswith("sqlite"):
+    connect_args = {"check_same_thread": False}
+
 engine = create_async_engine(
     database_url,
     echo=False,
-    future=True
+    future=True,
+    connect_args=connect_args
 )
 
 AsyncSessionLocal = async_sessionmaker(

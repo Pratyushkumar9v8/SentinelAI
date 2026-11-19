@@ -90,14 +90,15 @@ Think of SentinelAI as a unified miniature **Microsoft Defender + CrowdStrike Fa
 
 ## 🚀 Quick Start Guide
 
-### Prerequisites
-- **Python**: 3.10 or higher
-- **Node.js**: v18.0 or higher
-- **Docker**: (Optional, for containerized run)
+### Fastest Option: One-Command Presentation Runner
+```bash
+./start.sh
+```
+*This starts both the FastAPI Multi-Agent Backend on port 8000 and Next.js SOC Dashboard on port 3000 simultaneously.*
 
 ---
 
-### Option 1: Local Development Run (Fastest)
+### Option 1: Manual Local Run
 
 #### 1. Setup & Start Backend
 ```bash

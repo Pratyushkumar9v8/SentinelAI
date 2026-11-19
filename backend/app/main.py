@@ -4,11 +4,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
 from app.api.v1.router import api_router
 from app.api.websockets.stream import router as ws_router
+from app.core.database import engine, Base
+import app.models.models
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup tasks (initialize tables, models, vector store)
-    print("🚀 SentinelAI Core Backend Engine initialized.")
+    try:
+        async with engine.begin() as conn:
+            await conn.run_sync(Base.metadata.create_all)
+        print("🚀 SentinelAI Core Backend Engine initialized (Database & Tables Ready).")
+    except Exception as e:
+        print(f"⚠️ Database initialization notice: {e}")
     yield
     print("🛑 SentinelAI Core Backend Engine shut down.")
 
