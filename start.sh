@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SentinelAI - Complete Project Runner for College Presentation
+# SentinelAI - Complete Platform Runner
 set -e
 
 echo "=========================================================="
